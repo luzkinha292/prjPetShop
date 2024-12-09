@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro de Usuário - Petshop</title>
+</head>
+<body>
+    <header>
+        <h1>Petshop Amigo - Cadastro de Usuário</h1>
+    </header>
+
+    <main>
+        <section class="signup-container">
+            <h2>Cadastre-se</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="name">Nome Completo:</label>
+                    <input type="text" id="name" name="name" placeholder="Digite seu nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" placeholder="Crie uma senha" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirme sua Senha:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirme sua senha" required>
+                </div>
+                <button type="submit">Cadastrar</button>
+            </form>
+            <p>Já possui uma conta? <a href="login.html">Faça login</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Petshop Amigo - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const signupForm = document.getElementById("signupForm");
+
+    signupForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+            alert("As senhas não coincidem. Tente novamente.");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/api/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            if (response.ok) {
+                alert("Cadastro realizado com sucesso!");
+                window.location.href = "/login";
+            } else {
+                alert("Erro no cadastro. Verifique os dados e tente novamente.");
+            }
+        } catch (error) {
+            console.error("Erro ao conectar ao servidor:", error);
+            alert("Erro ao conectar ao servidor. Tente novamente mais tarde.");
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
+
+
+<!-- @RestController
+@RequestMapping("/api")
+public class SignupController {
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(@RequestBody User user) {
+        // Simulando a lógica de cadastro
+        if (user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
+            return ResponseEntity.badRequest().body("Dados inválidos");
+        }
+        // Em produção, insira o usuário no banco de dados
+        return ResponseEntity.ok("Usuário cadastrado com sucesso");
+    }
+
+    public static class User {
+        private String name;
+        private String email;
+        private String password;
+
+        // Getters e Setters
+    }
+} -->

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Registrar Serviço</title>
+</head>
+<body>
+    <header>
+        <h1>Pet Shop - Registrar Serviço</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Cadastrar Serviço</h2>
+            <form id="formServico">
+                <div>
+                    <label for="nomeServico"></label>
+                    <input type="text" id="nameService" placeholder="Digite o serviço que você deseja" required>
+                </div>
+                <div>
+                    <label for="descricaoServico">Descrição do serviço</label>
+                    <textarea id="descricaoServico" placeholder="Digite como você deseja esse serviço" required cols="20" rows="4"></textarea>
+                </div>
+                <div>
+                    <label for="precoServico"></label>
+                    <input type="number" id="precoServico" placeholder="Digite o valor do serviço" step="0,01" required>
+                </div>
+                <button type="submit">Cadastrar serviço</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Pet Shop - Todos os direitos reservados</p>
+    </footer>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const cadastroServico = document.getElementById("formServico");
+
+    cadastroServico.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const nomeServico = document.getElementById("nomeServico").value;
+        const descricaoServico = document.getElementById("descricaoServico").value;
+        const precoServico = document.getElementById("precoServico").value;
+
+        try {
+            const response = await fetch("http://localhost:8080/api/login&quot;", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nomeServico, descricaoServico, precoServico })
+        });
+
+            if (response.ok) {
+                alert("Registro bem-sucedido!");
+                window.location.href = "./index";
+            } else {
+                alert("Serviço já registrado");
+            }
+        } catch (error) {
+            console.error("Erro ao conectar ao servidor:", error);
+            alert("Erro ao conectar ao servidor. Tente novamente mais tarde.");
+        }
+    });
+});
+    </script>
+</body>
+</html>

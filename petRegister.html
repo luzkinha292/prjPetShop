@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Registrar Pet</title>
+</head>
+<body>
+    <header>
+        <h1>Registrar pet</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Cadastre seu pet</h2>
+            <form id="cadastroPet">
+                <div>
+                    <label for="nomePet">Nome do pet: </label>
+                    <input type="text" placeholder="Digite o nome do seu pet" required id="nomePet">
+                </div>
+                <div>
+                    <label for="tipoPet">Espécie do pet: </label>
+                    <select id="tipoPet" required>
+                        <option value="" disabled selected>Selecione a espécie</option>
+                        <option value="Cachorro">Cachorro</option>
+                        <option value="Gato">Gato</option>
+                        <option value="Aves">Aves</option>
+                        <option value="Peixe">Peixe</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="idadePet">Idade do Pet (em anos)</label>
+                    <input type="number" id="idadePet" placeholder="Digite a idade do pet" max="100">
+                </div>
+                <div>
+                    <label for="pesoPet">Peso do pet (em gramas)</label>
+                    <input type="number" id="pesoPet" placeholder="Digite o peso do pet">
+                </div>
+                <button type="submit">Cadastrar pet</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Pet Shop - Todos os direitos reservados</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const cadastroForm = document.getElementById("cadastroPet");
+
+    cadastroForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const nomePet = document.getElementById("nomePet").value;
+        const tipoPet = document.getElementById("tipoPet").value;
+        const idadePet = document.getElementById("idadePet").value;
+        const pesoPet = document.getElementById("pesoPet").value;
+
+        try {
+            const response = await fetch("http://localhost:8080/api/login&quot;", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nomePet, tipoPet, idadePet, pesoPet })
+        });
+
+            if (response.ok) {
+                alert("Registro bem-sucedido!");
+                window.location.href = "./index";
+            } else {
+                alert("Animal já registrado");
+            }
+        } catch (error) {
+            console.error("Erro ao conectar ao servidor:", error);
+            alert("Erro ao conectar ao servidor. Tente novamente mais tarde.");
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

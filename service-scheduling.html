@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Agendamento do Serviço</title>
+</head>
+<body>
+    <header>
+        <h1>Agendar Serviço</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Agende um Serviço</h2>
+            <form id="agendamentoForm">
+                <div>
+                    <label for="nomePet">Nome do pet</label>
+                    <input type="text" id="nomePet" placeholder="Digite o nome do pet" required>
+                </div>
+                <div>
+                    <label for="nomeCliente">Nome do cliente</label>
+                    <input type="text" id="nomeCliente" placeholder="Digite o seu nome" required>
+                </div>
+                <div>
+                    <label for="typeService">Tipos de serviço</label>
+                    <select id="typeService" required>
+                        <option disabled selected>Selecione o tipo do serviço</option>
+                        <option value="banho">Banho</option>
+                        <option value="tosa">Tosa</option>
+                        <option value="consulta">Consulta</option>
+                        <option value="hospedagem">Hospedagem</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="dataAgendamento">Data do agendamento</label>
+                    <input type="date" id="dataAgendamento" placeholder="Escolha a melhor data" required>
+                </div>
+                <div>
+                    <label for="horarioAgendamento">Horário do agendamento</label>
+                    <input type="time" id="horarioAgendamento" placeholder="Escolha o melhor horário" required>
+                </div>
+                <button type="submit">Agendar Serviço</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Pet Shop - Todos os direitos reservados</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const agendamentoServico = document.getElementById("agendamentoForm");
+    
+        agendamentoServico.addEventListener("submit", async (event) => {
+            event.preventDefault();
+    
+            const nomePet = document.getElementById("nomePet").value;
+            const nomeCliente = document.getElementById("nomeCliente").value;
+            const typeService = document.getElementById("typeService").value;
+            const dataAgendamento = document.getElementById("dataAgendamento").value;
+            const horarioAgendamento = document.getElementById("horarioAgendamento  ").value;
+    
+            try {
+                const response = await fetch("http://localhost:8080/api/login&quot;", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ nomeServico, descricaoServico, precoServico })
+            });
+    
+                if (response.ok) {
+                    alert("Agendamento bem-sucedido!");
+                    window.location.href = "./index";
+                } else {
+                    alert("Agendamento já marcado");
+                }
+            } catch (error) {
+                console.error("Erro ao conectar ao servidor:", error);
+                alert("Erro ao conectar ao servidor. Tente novamente mais tarde.");
+            }
+        });
+    });
+        </script>
+</body>
+</html>

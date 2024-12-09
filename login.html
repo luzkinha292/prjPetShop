@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Login Pet Shop</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Faça seu login</h2>
+            <form id="loginForm">
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Digite seu email" required id="email">
+                </div>
+                <div>
+                    <label for="password">Senha</label>
+                    <input type="password" placeholder="Digite sua senha" required id="password">
+                </div>
+                <button type="submit">Entrar</button>
+            </form>
+            <p>Ainda não tem conta? <a href="singup.html">Cadastre-se</a></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Pet Shop - Todos os direitos reservados</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        try {
+            const response = await fetch("http://localhost:8080/api/login&quot;", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+        });
+
+            if (response.ok) {
+                alert("Login bem-sucedido!");
+                window.location.href = "./index";
+            } else {
+                alert("E-mail ou senha incorretos. Tente novamente.");
+            }
+        } catch (error) {
+            console.error("Erro ao conectar ao servidor:", error);
+            alert("Erro ao conectar ao servidor. Tente novamente mais tarde.");
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
